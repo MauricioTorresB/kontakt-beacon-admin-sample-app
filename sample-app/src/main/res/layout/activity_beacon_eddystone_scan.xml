@@ -8,18 +8,18 @@
     android:padding="@dimen/activity_padding"
     >
 
-  <TextView
+  <!--<TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:text="@string/ibeacon_eddystone_scan_description"
-      />
+      />-->
 
+<!--  LE QUITE UN MARGIN TOP 16-->
   <Button
       android:id="@+id/start_scan_button"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
       android:text="@string/start_scanning"
       />
 

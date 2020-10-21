@@ -120,7 +120,8 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
     return new IBeaconListener() {
       @Override
       public void onIBeaconDiscovered(IBeaconDevice iBeacon, IBeaconRegion region) {
-        Log.i(TAG, "onIBeaconDiscovered: " + iBeacon.toString());
+        Log.i(TAG, "onIBeaconDiscovered: " + iBeacon.getAddress());
+        serviceBeacon("sim", "uuid", "latitud", "longitud");
       }
 
       @Override
@@ -189,5 +190,9 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
     //Remember to disconnect when finished.
     proximityManager.disconnect();
     super.onDestroy();
+  }
+
+  private void serviceBeacon(String sim, String uuid, String latitud, String longitud){
+
   }
 }
