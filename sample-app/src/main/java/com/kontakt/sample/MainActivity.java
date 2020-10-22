@@ -24,101 +24,103 @@ import com.kontakt.sample.samples.ScanRegionsActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-  public static final int REQUEST_CODE_PERMISSIONS = 100;
+    public static final int REQUEST_CODE_PERMISSIONS = 100;
+    public static final int PERMISSION_READ_STATE= 101;
 
-  private LinearLayout buttonsLayout;
+    private LinearLayout buttonsLayout;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    setupButtons();
-    checkPermissions();
-  }
-
-  //Setting up buttons and listeners.
-  private void setupButtons() {
-    buttonsLayout = findViewById(R.id.buttons_layout);
-
-    final Button beaconsScanningButton = findViewById(R.id.button_scan_beacons);
-    final Button beaconsProScanningButton = findViewById(R.id.button_scan_beacons_pro);
-    final Button scanRegionsButton = findViewById(R.id.button_scan_regions);
-    final Button scanFiltersButton = findViewById(R.id.button_scan_filters);
-    final Button backgroundScanButton = findViewById(R.id.button_scan_background);
-    final Button foregroundScanButton = findViewById(R.id.button_scan_foreground);
-    final Button configurationButton = findViewById(R.id.button_beacon_config);
-    final Button beaconProSensorsButton = findViewById(R.id.button_beacon_pro_sensors);
-    final Button kontaktCloudButton = findViewById(R.id.button_kontakt_cloud);
-
-    beaconsScanningButton.setOnClickListener(this);
-    beaconsProScanningButton.setOnClickListener(this);
-    scanRegionsButton.setOnClickListener(this);
-    scanFiltersButton.setOnClickListener(this);
-    backgroundScanButton.setOnClickListener(this);
-    foregroundScanButton.setOnClickListener(this);
-    configurationButton.setOnClickListener(this);
-    beaconProSensorsButton.setOnClickListener(this);
-    kontaktCloudButton.setOnClickListener(this);
-  }
-
-  //Since Android Marshmallow starting a Bluetooth Low Energy scan requires permission from location group.
-  private void checkPermissions() {
-    int checkSelfPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
-    if (PackageManager.PERMISSION_GRANTED != checkSelfPermissionResult) {
-      //Permission not granted so we ask for it. Results are handled in onRequestPermissionsResult() callback.
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_PERMISSIONS);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        setupButtons();
+        checkPermissions();
     }
-  }
 
-  @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-      if (REQUEST_CODE_PERMISSIONS == requestCode) {
-        Toast.makeText(this, "Permissions granted!", Toast.LENGTH_SHORT).show();
-      }
-    } else {
-      disableButtons();
-      Toast.makeText(this, "Location permissions are mandatory to use BLE features on Android 6.0 or higher", Toast.LENGTH_LONG).show();
-    }
-  }
+    //Setting up buttons and listeners.
+    private void setupButtons() {
+        buttonsLayout = findViewById(R.id.buttons_layout);
 
-  @Override
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.button_scan_beacons:
-        startActivity(BeaconEddystoneScanActivity.createIntent(this));
-        break;
-      case R.id.button_scan_beacons_pro:
-        startActivity(BeaconProScanActivity.createIntent(this));
-        break;
-      case R.id.button_scan_filters:
-        startActivity(ScanFiltersActivity.createIntent(this));
-        break;
-      case R.id.button_scan_regions:
-        startActivity(ScanRegionsActivity.createIntent(this));
-        break;
-      case R.id.button_scan_background:
-        startActivity(BackgroundScanActivity.createIntent(this));
-        break;
-      case R.id.button_scan_foreground:
-        startActivity(ForegroundScanActivity.createIntent(this));
-        break;
-      case R.id.button_beacon_config:
-        startActivity(BeaconConfigurationActivity.createIntent(this));
-        break;
-      case R.id.button_beacon_pro_sensors:
-        startActivity(BeaconProSensorsActivity.createIntent(this));
-        break;
-      case R.id.button_kontakt_cloud:
-        startActivity(KontaktCloudActivity.createIntent(this));
-        break;
-    }
-  }
+        final Button beaconsScanningButton = findViewById(R.id.button_scan_beacons);
+        final Button beaconsProScanningButton = findViewById(R.id.button_scan_beacons_pro);
+        final Button scanRegionsButton = findViewById(R.id.button_scan_regions);
+        final Button scanFiltersButton = findViewById(R.id.button_scan_filters);
+        final Button backgroundScanButton = findViewById(R.id.button_scan_background);
+        final Button foregroundScanButton = findViewById(R.id.button_scan_foreground);
+        final Button configurationButton = findViewById(R.id.button_beacon_config);
+        final Button beaconProSensorsButton = findViewById(R.id.button_beacon_pro_sensors);
+        final Button kontaktCloudButton = findViewById(R.id.button_kontakt_cloud);
 
-  private void disableButtons() {
-    for (int i = 0; i < buttonsLayout.getChildCount(); i++) {
-      buttonsLayout.getChildAt(i).setEnabled(false);
+        beaconsScanningButton.setOnClickListener(this);
+        beaconsProScanningButton.setOnClickListener(this);
+        scanRegionsButton.setOnClickListener(this);
+        scanFiltersButton.setOnClickListener(this);
+        backgroundScanButton.setOnClickListener(this);
+        foregroundScanButton.setOnClickListener(this);
+        configurationButton.setOnClickListener(this);
+        beaconProSensorsButton.setOnClickListener(this);
+        kontaktCloudButton.setOnClickListener(this);
     }
-  }
+
+    //Since Android Marshmallow starting a Bluetooth Low Energy scan requires permission from location group.
+    private void checkPermissions() {
+        int checkSelfPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
+        if (PackageManager.PERMISSION_GRANTED != checkSelfPermissionResult && PackageManager.PERMISSION_GRANTED != permissionCheck) {
+            //Permission not granted so we ask for it. Results are handled in onRequestPermissionsResult() callback.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE_PERMISSIONS);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (REQUEST_CODE_PERMISSIONS == requestCode) {
+                Toast.makeText(this, "Permissions granted!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            disableButtons();
+            Toast.makeText(this, "Location permissions are mandatory to use BLE features on Android 6.0 or higher", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_scan_beacons:
+                startActivity(BeaconEddystoneScanActivity.createIntent(this));
+                break;
+            case R.id.button_scan_beacons_pro:
+                startActivity(BeaconProScanActivity.createIntent(this));
+                break;
+            case R.id.button_scan_filters:
+                startActivity(ScanFiltersActivity.createIntent(this));
+                break;
+            case R.id.button_scan_regions:
+                startActivity(ScanRegionsActivity.createIntent(this));
+                break;
+            case R.id.button_scan_background:
+                startActivity(BackgroundScanActivity.createIntent(this));
+                break;
+            case R.id.button_scan_foreground:
+                startActivity(ForegroundScanActivity.createIntent(this));
+                break;
+            case R.id.button_beacon_config:
+                startActivity(BeaconConfigurationActivity.createIntent(this));
+                break;
+            case R.id.button_beacon_pro_sensors:
+                startActivity(BeaconProSensorsActivity.createIntent(this));
+                break;
+            case R.id.button_kontakt_cloud:
+                startActivity(KontaktCloudActivity.createIntent(this));
+                break;
+        }
+    }
+
+    private void disableButtons() {
+        for (int i = 0; i < buttonsLayout.getChildCount(); i++) {
+            buttonsLayout.getChildAt(i).setEnabled(false);
+        }
+    }
 
 }
