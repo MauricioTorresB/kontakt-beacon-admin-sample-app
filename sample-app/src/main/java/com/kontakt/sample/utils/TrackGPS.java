@@ -1,4 +1,4 @@
-package com.kontakt.sample.Utils;
+package com.kontakt.sample.utils;
 
 import android.app.AlertDialog;
 import android.app.Service;

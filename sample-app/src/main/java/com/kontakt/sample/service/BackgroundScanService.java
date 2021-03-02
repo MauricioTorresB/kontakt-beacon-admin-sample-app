@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.kontakt.sample.samples.BeaconEddystoneScanActivity;
 import com.kontakt.sdk.android.ble.configuration.ScanMode;
 import com.kontakt.sdk.android.ble.configuration.ScanPeriod;
 import com.kontakt.sdk.android.ble.connection.OnServiceReadyListener;
@@ -22,6 +23,7 @@ import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 import com.kontakt.sdk.android.common.profile.RemoteBluetoothDevice;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class BackgroundScanService extends Service {
@@ -30,6 +32,7 @@ public class BackgroundScanService extends Service {
   public static final String ACTION_DEVICE_DISCOVERED = "DeviceDiscoveredAction";
   public static final String EXTRA_DEVICE = "DeviceExtra";
   public static final String EXTRA_DEVICES_COUNT = "DevicesCountExtra";
+  public static final String EXTRA_INOUT = "InOutExtra";
 
   private static final long TIMEOUT = TimeUnit.SECONDS.toMillis(30);
 
@@ -87,7 +90,7 @@ public class BackgroundScanService extends Service {
         Toast.makeText(BackgroundScanService.this, "Scanning service started.", Toast.LENGTH_SHORT).show();
       }
     });
-    stopAfterDelay();
+    //stopAfterDelay();
   }
 
   private void stopAfterDelay() {
@@ -106,6 +109,18 @@ public class BackgroundScanService extends Service {
       public void onIBeaconDiscovered(IBeaconDevice ibeacon, IBeaconRegion region) {
         onDeviceDiscovered(ibeacon);
         Log.i(TAG, "onIBeaconDiscovered: " + ibeacon.toString());
+      }
+
+      @Override
+      public void onIBeaconsUpdated(List<IBeaconDevice> iBeacons, IBeaconRegion region) {
+        Log.i(TAG, "onIBeaconDiscovered: " + iBeacons.toString());
+        Toast.makeText(BackgroundScanService.this, iBeacons.toString(), Toast.LENGTH_SHORT).show();
+      }
+
+      @Override
+      public void onIBeaconLost(IBeaconDevice iBeacon, IBeaconRegion region) {
+        Log.i(TAG, "onIBeaconDiscovered: " + "BEACON PERDIDO");
+        Toast.makeText(BackgroundScanService.this, "BEACON PERDIDO", Toast.LENGTH_SHORT).show();
       }
     };
   }
@@ -132,6 +147,7 @@ public class BackgroundScanService extends Service {
 
   @Override
   public void onDestroy() {
+    Log.i(TAG, "onEddystoneDiscovered: onDestroyService");
     handler.removeCallbacksAndMessages(null);
     if (proximityManager != null) {
       proximityManager.disconnect();

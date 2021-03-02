@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,7 @@ public class BackgroundScanActivity extends AppCompatActivity implements View.On
 
   @Override
   protected void onPause() {
+    Log.i("TAG", "onEddystoneDiscovered: onPause");
     unregisterReceiver(scanningBroadcastReceiver);
     super.onPause();
   }

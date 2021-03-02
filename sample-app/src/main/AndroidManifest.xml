@@ -2,69 +2,89 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kontakt.sample">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="android.permission.BLUETOOTH"/>
-  <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-  <application
-      android:name=".App"
-      android:allowBackup="true"
-      android:label="@string/app_name"
-      android:theme="@style/AppTheme">
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_bcnn"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_bcnn_round"
+        android:theme="@style/AppTheme">
 
-    <!-- Activities -->
+        <!-- Activities -->
 
-    <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity
-        android:name=".samples.BeaconEddystoneScanActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.BeaconProScanActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.ScanRegionsActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.ScanFiltersActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.BackgroundScanActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.BeaconConfigurationActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.BeaconProSensorsActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.KontaktCloudActivity"
-        android:screenOrientation="portrait"/>
-    <activity
-        android:name=".samples.ForegroundScanActivity"
-        android:screenOrientation="portrait"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-    <!-- Services -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
-    <service
-        android:name="com.kontakt.sdk.android.ble.service.ProximityService"
-        android:exported="false"/>
-    <service
-        android:name=".service.BackgroundScanService"
-        android:enabled="true"
-        android:exported="false"/>
-    <service android:name=".service.ForegroundScanService"
-        android:exported="false"/>
+                <data
+                    android:host="getpoint"
+                    android:scheme="sgabeacon" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".samples.BeaconEddystoneScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.BeaconProScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.ScanRegionsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.ScanFiltersActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.BackgroundScanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.BeaconConfigurationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.BeaconProSensorsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.KontaktCloudActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".samples.ForegroundScanActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-  </application>
+        <!-- Services -->
 
+        <service
+            android:name="com.kontakt.sdk.android.ble.service.ProximityService"
+            android:exported="false" />
+        <service
+            android:name=".service.BackgroundScanService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".service.ForegroundScanService"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+    </application>
 </manifest>

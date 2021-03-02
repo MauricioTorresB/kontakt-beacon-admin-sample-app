@@ -1,53 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_foreground_scan"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_vertical"
     android:orientation="vertical"
-    android:padding="@dimen/activity_padding"
-    >
+    android:padding="@dimen/activity_padding">
 
-  <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:gravity="center"
-      android:text="@string/foreground_scan_description"
-      />
 
-  <Button
-      android:id="@+id/start_scan_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:text="@string/start_scanning_service"
-      />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/foreground_scan_description"
+        android:visibility="gone" />
 
-  <Button
-      android:id="@+id/stop_scan_button"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/stop_scanning_service"
-      />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/review_bcn" />
 
-  <ProgressBar
-      android:id="@+id/scanning_progress"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginTop="16dp"
-      android:visibility="gone"
-      />
 
-  <TextView
-      android:id="@+id/status_text"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:layout_gravity="center_horizontal"
-      android:gravity="center"
-      tools:text="Devices discovered: 0"
-      />
+    <Button
+        android:id="@+id/start_scan_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColorDark"
+        android:text="Iniciar Scanning"
+        android:textColor="@color/white" />
 
+    <Button
+        android:id="@+id/stop_scan_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/primaryColorDark"
+        android:text="Detener Scanning"
+        android:textColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/scanning_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:textSize="20sp"
+            tools:text="Señal Inactiva" />
+
+        <ImageView
+            android:id="@+id/img_active_signal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/borde"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configuración"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false" />
+
+        <Button
+            android:id="@+id/btn_editar_configuracion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/primaryColorDark"
+            android:text="Editar"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/ll_configuracion_enabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_cancelar_configuracion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:layout_weight=".1"
+                android:background="@color/primaryColorDark"
+                android:text="Cancelar"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_aceptar_configuracion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_weight=".1"
+                android:background="@color/primaryColorDark"
+                android:text="Guardar"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

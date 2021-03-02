@@ -1,13 +1,10 @@
 package com.kontakt.sample.samples;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,7 +23,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.kontakt.sample.R;
-import com.kontakt.sample.Utils.TrackGPS;
+import com.kontakt.sample.utils.TrackGPS;
 import com.kontakt.sample.service.Interfaces.BeaconResponseListener;
 import com.kontakt.sample.service.api.BeaconApiService;
 import com.kontakt.sdk.android.ble.configuration.ScanMode;
@@ -41,7 +38,6 @@ import com.kontakt.sdk.android.common.profile.IBeaconRegion;
 import com.kontakt.sdk.android.common.profile.IEddystoneDevice;
 import com.kontakt.sdk.android.common.profile.IEddystoneNamespace;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -142,7 +138,8 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
                 String lon = String.valueOf(trackGPS.getLongitude());
                 String sim = getSimSerialNumber();
 
-                serviceBeacon(sim, iBeacon.getProximityUUID().toString(), lat, lon);
+                serviceBeacon(sim, iBeacon.getProximityUUID().toString(), iBeacon.getMajor(), iBeacon.getMinor(), lat, lon, iBeacon.toString(),
+                        "Entrada","");
             }
 
             @Override
@@ -154,6 +151,13 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
             public void onIBeaconLost(IBeaconDevice iBeacon, IBeaconRegion region) {
                 Log.e(TAG, "onIBeaconLost: " + iBeacon.toString());
                 Toast.makeText(BeaconEddystoneScanActivity.this, "BEACON PERDIDO", Toast.LENGTH_SHORT).show();
+                TrackGPS trackGPS = new TrackGPS(BeaconEddystoneScanActivity.this);
+                String lat = String.valueOf(trackGPS.getLatitude());
+                String lon = String.valueOf(trackGPS.getLongitude());
+                String sim = getSimSerialNumber();
+
+                serviceBeacon(sim, iBeacon.getProximityUUID().toString(), iBeacon.getMajor(), iBeacon.getMinor(), lat, lon, iBeacon.toString(),
+                        "Salida","");
             }
         };
     }
@@ -189,10 +193,10 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
             }
             List<SubscriptionInfo> subsList = subsManager.getActiveSubscriptionInfoList();
 
-            if (subsList!=null) {
+            if (subsList != null) {
                 for (SubscriptionInfo subsInfo : subsList) {
                     if (subsInfo != null) {
-                        simSerialNo  = subsInfo.getIccId();
+                        simSerialNo = subsInfo.getIccId();
                     }
                 }
             }
@@ -241,14 +245,14 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
         super.onDestroy();
     }
 
-    private void serviceBeacon(String sim, String uuid, String latitud, String longitud) {
+    private void serviceBeacon(String sim, String uuid, int major, int minor, String latitud, String longitud, String dato1, String dato2, String dato3) {
         final ProgressDialog progressDialog = new ProgressDialog(BeaconEddystoneScanActivity.this);
         progressDialog.setCancelable(false); // set cancelable to false
         progressDialog.setMessage("Cargando"); // set message
         progressDialog.show(); // show progress dialog
 
         BeaconApiService beaconApiService = new BeaconApiService();
-        beaconApiService.connect(this, sim, uuid, latitud, longitud, new BeaconResponseListener() {
+        beaconApiService.connect(this, sim, uuid, major, minor,latitud, longitud, dato1, dato2, dato3, new BeaconResponseListener() {
             @Override
             public void requestStarted() {
                 progressDialog.show();
@@ -268,4 +272,5 @@ public class BeaconEddystoneScanActivity extends AppCompatActivity implements Vi
         });
 
     }
+
 }

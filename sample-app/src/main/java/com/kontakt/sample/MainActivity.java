@@ -25,7 +25,7 @@ import com.kontakt.sample.samples.ScanRegionsActivity;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final int REQUEST_CODE_PERMISSIONS = 100;
-    public static final int PERMISSION_READ_STATE= 101;
+    public static final int PERMISSION_READ_STATE = 101;
 
     private LinearLayout buttonsLayout;
 
@@ -34,7 +34,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupButtons();
-        checkPermissions();
+        //checkPermissions();
+
+        startActivity(ForegroundScanActivity.createIntent(this));
+        //startActivity(BackgroundScanActivity.createIntent(this));
+        finish();
     }
 
     //Setting up buttons and listeners.
@@ -62,13 +66,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         kontaktCloudButton.setOnClickListener(this);
     }
 
-    //Since Android Marshmallow starting a Bluetooth Low Energy scan requires permission from location group.
+    /*//Since Android Marshmallow starting a Bluetooth Low Energy scan requires permission from location group.
     private void checkPermissions() {
         int checkSelfPermissionResult = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE);
         if (PackageManager.PERMISSION_GRANTED != checkSelfPermissionResult && PackageManager.PERMISSION_GRANTED != permissionCheck) {
             //Permission not granted so we ask for it. Results are handled in onRequestPermissionsResult() callback.
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE_PERMISSIONS);
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE
+            }, REQUEST_CODE_PERMISSIONS);
         }
     }
 
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             disableButtons();
             Toast.makeText(this, "Location permissions are mandatory to use BLE features on Android 6.0 or higher", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     @Override
     public void onClick(View view) {

@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="iBeacon / Eddystone Scanning"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -29,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Beacon Pro Scanning"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -37,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Scanning Regions"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -45,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Scanning Filters"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -53,6 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Background Scanning"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -60,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:text="Foreground Scanning"
+        android:text="Test Scanning"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -69,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Beacon Configuration"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -77,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Beacon Pro Sensors"
+        android:visibility="gone"
         />
 
     <android.support.v7.widget.AppCompatButton
@@ -85,6 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:text="Kontakt Cloud"
+        android:visibility="gone"
         />
 
   </LinearLayout>
